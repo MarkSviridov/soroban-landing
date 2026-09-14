@@ -1,0 +1,20 @@
+---
+import Section from '@/components/ui/Section.astro';
+import Button from '@/components/ui/Button.astro';
+import { site, getLocale } from '@/content/site';
+import { PHONE } from '@/consts';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<Section id="final-cta" muted class="text-center">
+  <h2 class="font-display text-ink-900 mx-auto max-w-2xl text-3xl font-black sm:text-4xl">
+    {t.finalCta.title}
+  </h2>
+  <p class="text-ink-700 mx-auto mt-4 max-w-xl text-lg">{t.finalCta.text}</p>
+
+  <div class="mt-8 flex flex-wrap justify-center gap-3">
+    <Button href="#lead-form" data-analytics="final_cta">{t.cta.primary}</Button>
+    <Button href={PHONE.href} variant="ghost">{t.cta.call}: {PHONE.display}</Button>
+  </div>
+</Section>

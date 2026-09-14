@@ -1,0 +1,26 @@
+---
+import Container from './Container.astro';
+
+interface Props {
+  id?: string;
+  class?: string;
+  containerClass?: string;
+  /** Приглушённый фон для чередования секций. */
+  muted?: boolean;
+}
+
+const { id, class: className = '', containerClass = '', muted = false }: Props = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    'scroll-mt-24 py-16 sm:py-20 lg:py-24',
+    muted ? 'bg-surface-muted' : 'bg-surface',
+    className,
+  ]}
+>
+  <Container class={containerClass}>
+    <slot />
+  </Container>
+</section>

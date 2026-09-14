@@ -1,0 +1,44 @@
+---
+/**
+ * Обычная растровая картинка из public/images/optimized/ (WebP).
+ * Astro не обрабатывает файлы из public/, поэтому используем нативный <img>
+ * с явными width/height (против сдвига layout), alt, decoding="async".
+ *
+ * priority=true — только для Hero (LCP): без lazy, с fetchpriority="high".
+ */
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+  priority?: boolean;
+}
+
+const { src, alt, width, height, class: className = '', priority = false }: Props = Astro.props;
+---
+
+{
+  priority ? (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      class={className}
+      decoding="async"
+      loading="eager"
+      fetchpriority="high"
+    />
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      class={className}
+      decoding="async"
+      loading="lazy"
+    />
+  )
+}

@@ -1,0 +1,37 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import Button from '@/components/ui/Button.astro';
+import { site, getLocale } from '@/content/site';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<Section id="trial">
+  <div class="bg-brand-500 rounded-3xl px-6 py-12 text-white sm:px-12">
+    <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
+      <div>
+        <h2 class="font-display text-3xl font-black sm:text-4xl">{t.trial.title}</h2>
+        <ul class="mt-6 space-y-3">
+          {
+            t.trial.items.map((item) => (
+              <li class="flex items-start gap-2">
+                <Icon name="lucide:check" class="mt-1 h-4 w-4 shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="lg:text-right">
+        <p class="text-white/90">{t.trial.note}</p>
+        <div class="mt-5">
+          <Button href="#lead-form" variant="secondary" data-analytics="trial_cta">
+            {t.cta.primary}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>

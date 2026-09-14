@@ -1,0 +1,199 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import Field from '@/components/form/Field.astro';
+import SelectField from '@/components/form/SelectField.astro';
+import { site, getLocale } from '@/content/site';
+import { PHONE, AGE } from '@/consts';
+
+const t = site[getLocale(Astro.url)];
+const f = t.form;
+const privacyHref = getLocale(Astro.url) === 'ro' ? '/ro/privacy' : '/privacy';
+---
+
+<Section id="lead-form" muted>
+  <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
+    <div>
+      <p class="font-display text-brand-600 text-sm font-bold tracking-wide uppercase">
+        {f.freeBadge}
+      </p>
+      <h2 class="font-display text-ink-900 mt-2 text-3xl font-black sm:text-4xl">{f.title}</h2>
+      <p class="text-ink-700 mt-4 text-lg">{f.subtitle}</p>
+
+      <ul class="mt-6 space-y-3">
+        {
+          t.trial.items.map((item) => (
+            <li class="text-ink-700 flex items-start gap-2">
+              <Icon name="lucide:check" class="text-brand-500 mt-1 h-4 w-4 shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="text-ink-500 mt-6 text-sm">{t.trial.note}</p>
+      <p class="text-ink-700 mt-4 text-sm">
+        {f.callPrompt}
+        <a href={PHONE.href} class="text-brand-600 font-bold">{PHONE.display}</a>
+      </p>
+    </div>
+
+    <div class="border-ink-900/5 bg-surface rounded-3xl border p-6 shadow-sm sm:p-8">
+      <form id="trial-form" novalidate class="flex flex-col gap-5">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Field
+            id="parentName"
+            name="parentName"
+            label={f.labels.parentName}
+            placeholder={f.placeholders.parentName}
+            autocomplete="name"
+            maskWebvisor
+          />
+          <Field
+            id="phone"
+            name="phone"
+            type="tel"
+            inputmode="tel"
+            label={f.labels.phone}
+            placeholder={f.placeholders.phone}
+            autocomplete="tel"
+            maskWebvisor
+          />
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Field
+            id="childName"
+            name="childName"
+            label={f.labels.childName}
+            placeholder={f.placeholders.childName}
+            autocomplete="off"
+            maskWebvisor
+          />
+          <Field
+            id="childAge"
+            name="childAge"
+            type="number"
+            inputmode="numeric"
+            label={f.labels.childAge}
+            placeholder={f.placeholders.childAge}
+            min={AGE.min}
+            max={AGE.max}
+          />
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <SelectField
+            id="district"
+            name="district"
+            label={f.labels.district}
+            options={f.options.districts}
+            placeholder={f.placeholders.select}
+          />
+          <SelectField
+            id="language"
+            name="language"
+            label={f.labels.language}
+            options={f.options.languages}
+            placeholder={f.placeholders.select}
+          />
+        </div>
+
+        <SelectField
+          id="format"
+          name="format"
+          label={f.labels.format}
+          options={f.options.formats}
+          placeholder={f.placeholders.select}
+        />
+
+        <div class="flex flex-col gap-1.5">
+          <label for="comment" class="text-ink-900 text-sm font-semibold">{f.labels.comment}</label>
+          <textarea
+            id="comment"
+            name="comment"
+            rows="3"
+            placeholder={f.placeholders.comment}
+            data-ym-disable-keys="true"
+            class="ym-hide-content border-ink-300/70 bg-surface text-ink-900 placeholder:text-ink-300 focus-visible:border-brand-500 focus-visible:ring-brand-500/30 rounded-xl border px-4 py-3 text-base transition-colors outline-none focus-visible:ring-2"
+          ></textarea>
+        </div>
+
+        {/* Honeypot — скрытое поле для отсева ботов. */}
+        <div class="hidden" aria-hidden="true">
+          <label>
+            {f.honeypotLabel}
+            <input type="text" name="company" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-ink-700 flex items-start gap-3 text-sm">
+            <input
+              type="checkbox"
+              name="consent"
+              id="consent"
+              class="border-ink-300 accent-brand-600 focus-visible:outline-brand-600 mt-0.5 h-5 w-5 shrink-0 rounded focus-visible:outline-2 focus-visible:outline-offset-2"
+              aria-describedby="consent-error"
+            />
+            <span>
+              {f.labels.consent}.
+              <a href={privacyHref} class="text-brand-600 font-semibold underline">
+                {f.privacyLinkText}
+              </a>.
+            </span>
+          </label>
+          <p id="consent-error" class="text-brand-700 hidden text-sm font-medium" role="alert"></p>
+        </div>
+
+        <button
+          type="submit"
+          id="trial-submit"
+          class="bg-brand-500 font-display hover:bg-brand-600 focus-visible:outline-brand-600 inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-base font-extrabold text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <span data-submit-label>{f.submit}</span>
+        </button>
+
+        <p id="form-status" class="sr-only" role="status" aria-live="polite"></p>
+      </form>
+
+      <div
+        id="form-success"
+        hidden
+        class="bg-brand-50 flex flex-col items-start gap-2 rounded-2xl p-6"
+      >
+        <span class="bg-brand-500/15 flex h-10 w-10 items-center justify-center rounded-full">
+          <Icon name="lucide:check" class="text-brand-600 h-5 w-5" />
+        </span>
+        <p class="font-display text-ink-900 text-lg font-black">{f.successTitle}</p>
+        <p class="text-ink-700">{f.successText}</p>
+      </div>
+
+      <div
+        id="form-error"
+        hidden
+        class="bg-accent-100 flex flex-col items-start gap-2 rounded-2xl p-6"
+      >
+        <span class="bg-accent-600/20 flex h-10 w-10 items-center justify-center rounded-full">
+          <Icon name="lucide:info" class="text-accent-600 h-5 w-5" />
+        </span>
+        <p class="font-display text-ink-900 text-lg font-black">{f.errorTitle}</p>
+        <p class="text-ink-700">
+          {f.errorText}
+          <a href={PHONE.href} class="text-brand-600 font-bold">{PHONE.display}</a>.
+        </p>
+        <button
+          type="button"
+          id="form-retry"
+          class="text-brand-600 mt-1 text-sm font-bold underline"
+        >
+          {f.retry}
+        </button>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script>
+  import '../form/form.client.ts';
+</script>

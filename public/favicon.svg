@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SOROBAN">
+  <rect width="64" height="64" rx="14" fill="#ee4d2d" />
+  <g fill="#ffffff">
+    <rect x="12" y="17" width="40" height="3.5" rx="1.75" />
+    <rect x="12" y="31" width="40" height="3.5" rx="1.75" />
+    <rect x="12" y="45" width="40" height="3.5" rx="1.75" />
+    <circle cx="23" cy="18.75" r="6" />
+    <circle cx="41" cy="32.75" r="6" />
+    <circle cx="29" cy="46.75" r="6" />
+  </g>
+</svg>

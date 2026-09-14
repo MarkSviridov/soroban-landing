@@ -1,0 +1,87 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { site, getLocale } from '@/content/site';
+import { PHONE, SOCIALS, OFFICES, SITE, mapSearchUrl, mapDirectionsUrl } from '@/consts';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<Section id="contacts">
+  <SectionHeading eyebrow={t.contacts.eyebrow} title={t.contacts.title} intro={t.contacts.lead} />
+
+  <div class="mt-10 grid gap-10 lg:grid-cols-3">
+    <div>
+      <p class="text-brand-600 text-sm font-bold tracking-wide uppercase">
+        {t.contacts.phoneLabel}
+      </p>
+      <a href={PHONE.href} class="font-display text-ink-900 mt-1 block text-2xl font-black">
+        {PHONE.display}
+      </a>
+      <p class="text-ink-500 mt-1 text-sm">{t.contacts.phoneNote}</p>
+
+      <p class="text-brand-600 mt-6 text-sm font-bold tracking-wide uppercase">
+        {t.contacts.socialsTitle}
+      </p>
+      <ul class="text-ink-700 mt-2 space-y-1">
+        {
+          SOCIALS.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener" class="hover:text-brand-600">
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="mt-6">
+        <a
+          href={SITE.mainSite}
+          target="_blank"
+          rel="noopener"
+          class="text-brand-600 font-semibold hover:underline"
+        >
+          {t.contacts.siteButton} →
+        </a>
+      </p>
+    </div>
+
+    <div class="lg:col-span-2">
+      <p class="text-brand-600 text-sm font-bold tracking-wide uppercase">
+        {t.contacts.officesTitle}
+      </p>
+      <ul class="mt-3 grid gap-4 sm:grid-cols-2">
+        {
+          OFFICES.map((office) => (
+            <li class="border-ink-900/10 bg-surface rounded-2xl border p-5">
+              <p class="font-display text-ink-900 text-lg font-bold">
+                {t.contacts.officeDistricts[office.id]}
+              </p>
+              <p class="text-ink-700 mt-1">{office.address}</p>
+              <div class="mt-3 flex flex-wrap gap-4 text-sm font-semibold">
+                <a
+                  href={mapSearchUrl(office.mapQuery)}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-brand-600 hover:underline"
+                >
+                  {t.contacts.mapButton}
+                </a>
+                <a
+                  href={mapDirectionsUrl(office.mapQuery)}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-brand-600 hover:underline"
+                >
+                  {t.contacts.directionsButton}
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="text-ink-500 mt-3 text-sm">{t.contacts.onlineNote}</p>
+    </div>
+  </div>
+</Section>

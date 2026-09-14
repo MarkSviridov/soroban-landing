@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import Hero from '@/components/sections/Hero.astro';
+import LeadForm from '@/components/sections/LeadForm.astro';
+import About from '@/components/sections/About.astro';
+import Benefits from '@/components/sections/Benefits.astro';
+import HowItWorks from '@/components/sections/HowItWorks.astro';
+import AppSoroboomAR from '@/components/sections/AppSoroboomAR.astro';
+import VSL from '@/components/sections/VSL.astro';
+import Practice from '@/components/sections/Practice.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import TrialOffer from '@/components/sections/TrialOffer.astro';
+import FAQ from '@/components/sections/FAQ.astro';
+import Contacts from '@/components/sections/Contacts.astro';
+import FinalCTA from '@/components/sections/FinalCTA.astro';
+import { site, getLocale } from '@/content/site';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<BaseLayout title={t.meta.title} description={t.meta.description}>
+  <Header />
+  <main>
+    <Hero />
+    <LeadForm />
+    <About />
+    <Benefits />
+    <HowItWorks />
+    <AppSoroboomAR />
+    <VSL />
+    <Practice />
+    <Testimonials />
+    <TrialOffer />
+    <FAQ />
+    <Contacts />
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>

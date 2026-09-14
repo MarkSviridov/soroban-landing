@@ -1,0 +1,101 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/ui/Container.astro';
+import { SITE, PHONE } from '@/consts';
+
+const title = `Politica de confidențialitate — ${SITE.name}`;
+const description =
+  'Cum prelucrează școala SOROBAN datele cu caracter personal transmise prin formularul de înscriere la lecția de probă.';
+---
+
+<BaseLayout title={title} description={description} noindex>
+  <main id="top" class="py-14 sm:py-20">
+    <Container class="max-w-3xl">
+      <a href="/ro/" class="text-brand-600 text-sm font-semibold hover:underline">
+        ← Înapoi la pagina principală
+      </a>
+
+      <h1 class="font-display text-ink-900 mt-4 text-3xl font-black sm:text-4xl">
+        Politica de confidențialitate
+      </h1>
+
+      <div
+        class="text-ink-700 [&_h2]:font-display [&_h2]:text-ink-900 mt-8 space-y-4 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-bold [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-6"
+      >
+        <h2>1. Dispoziții generale</h2>
+        <p>
+          Această politică descrie modul în care școala de aritmetică mentală SOROBAN (în continuare
+          — „Școala”) prelucrează datele cu caracter personal pe care le transmiteți prin formularul
+          de înscriere la lecția de probă gratuită de pe acest site.
+        </p>
+
+        <h2>2. Ce date colectăm</h2>
+        <ul>
+          <li>numele părintelui (sau al persoanei care completează cererea);</li>
+          <li>numărul de telefon;</li>
+          <li>vârsta copilului;</li>
+          <li>sectorul, formatul și limba preferate pentru lecții;</li>
+          <li>
+            date tehnice de analiză web (de exemplu, fișiere cookie) — doar dacă vor fi conectate
+            serviciile respective; la momentul publicării acestei ciorne, ele nu sunt folosite.
+          </li>
+        </ul>
+
+        <h2>3. Scopurile prelucrării</h2>
+        <ul>
+          <li>să vă contactăm în legătură cu cererea trimisă;</li>
+          <li>să înscriem copilul la lecția de probă gratuită și să stabilim detaliile;</li>
+          <li>să răspundem la întrebările dumneavoastră despre curs.</li>
+        </ul>
+
+        <h2>4. Temeiul legal</h2>
+        <p>
+          Prelucrarea se face în baza consimțământului dumneavoastră, pe care îl exprimați bifând
+          căsuța respectivă și trimițând formularul. Consimțământul poate fi retras oricând, la
+          datele de contact de mai sus.
+        </p>
+
+        <h2>5. Termenul de păstrare</h2>
+        <p>
+          Datele se păstrează până la atingerea scopurilor prelucrării sau până la retragerea
+          consimțământului, după care sunt șterse sau anonimizate, dacă legislația nu prevede
+          altfel.
+        </p>
+
+        <h2>6. Transmiterea către terți</h2>
+        <p>
+          Nu transmitem datele dumneavoastră către terți, cu excepția cazurilor în care acest lucru
+          este necesar pentru procesarea cererii (de exemplu, serviciile folosite de Școală pentru
+          primirea și stocarea cererilor), precum și a cazurilor prevăzute de lege.
+        </p>
+
+        <h2>7. Drepturile dumneavoastră</h2>
+        <ul>
+          <li>să aflați ce date ale dumneavoastră sunt prelucrate;</li>
+          <li>să cereți corectarea datelor inexacte;</li>
+          <li>să cereți ștergerea datelor;</li>
+          <li>să retrageți consimțământul acordat anterior.</li>
+        </ul>
+        <p>Pentru exercitarea drepturilor, contactați-ne la numărul de telefon indicat mai sus.</p>
+
+        <h2>8. Fișiere cookie și analiză</h2>
+        <p>
+          Dacă pe site vor fi conectate servicii de analiză web, această secțiune va fi completată
+          cu lista serviciilor, scopurile și modalitățile de refuz al colectării datelor.
+        </p>
+
+        <h2>9. Modificări ale politicii</h2>
+        <p>
+          Putem actualiza această politică. Versiunea actuală este întotdeauna disponibilă pe
+          această pagină; modificările importante vor fi marcate cu data actualizării.
+        </p>
+
+        <h2>10. Contacte</h2>
+        <p>
+          Pentru întrebări privind prelucrarea datelor cu caracter personal:
+          <a href={PHONE.href} class="text-brand-600 font-semibold">{PHONE.display}</a>.
+        </p>
+      </div>
+    </Container>
+  </main>
+</BaseLayout>

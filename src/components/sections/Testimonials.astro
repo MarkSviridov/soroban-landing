@@ -1,0 +1,58 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { reviews, buildReviewAlt } from '@/content/reviews';
+import { site, getLocale } from '@/content/site';
+import { GOOGLE_REVIEWS_URL } from '@/consts';
+
+/**
+ * Галерея реальных скриншотов отзывов из Google Карт.
+ * Тексты, авторы и даты не изменяются. Если reviews пуст — секция не рендерится.
+ */
+const locale = getLocale(Astro.url);
+const t = site[locale];
+const localeReviews = reviews[locale];
+const hasReviews = localeReviews.length > 0;
+---
+
+{
+  hasReviews && (
+    <Section id="testimonials" muted>
+      <SectionHeading
+        eyebrow={t.testimonials.eyebrow}
+        title={t.testimonials.title}
+        align="center"
+        intro={t.testimonials.intro}
+      />
+
+      <ul class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+        {localeReviews.map((review) => (
+          <li class="border-ink-900/10 overflow-hidden rounded-2xl border bg-white shadow-sm">
+            <img
+              src={review.src}
+              alt={buildReviewAlt(t.testimonials.altTemplate, review.names)}
+              width={review.width}
+              height={review.height}
+              loading="lazy"
+              decoding="async"
+              class="h-auto w-full"
+            />
+          </li>
+        ))}
+      </ul>
+
+      {GOOGLE_REVIEWS_URL && (
+        <p class="mt-8 text-center">
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener"
+            class="text-brand-600 font-semibold hover:underline"
+          >
+            {t.testimonials.googleLink}
+          </a>
+        </p>
+      )}
+    </Section>
+  )
+}

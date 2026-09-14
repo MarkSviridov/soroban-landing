@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+/*
+  Дизайн-токены проекта (Tailwind v4, CSS-first конфиг).
+  Цвета бренда подобраны как рабочий вариант — скорректируем под фирменный стиль.
+*/
+@theme {
+  /* Шрифты */
+  --font-display: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Бренд — тёплый красно-оранжевый */
+  --color-brand-50: #fff3f0;
+  --color-brand-100: #ffe0d8;
+  --color-brand-200: #ffc1b0;
+  --color-brand-300: #ff9a80;
+  --color-brand-400: #f9694a;
+  --color-brand-500: #ee4d2d;
+  --color-brand-600: #d43a1c;
+  --color-brand-700: #b02d15;
+  --color-brand-800: #8a2413;
+  --color-brand-900: #6d2013;
+
+  /* Акцент — тёплый жёлтый */
+  --color-accent-100: #fff2cc;
+  --color-accent-300: #ffd666;
+  --color-accent-500: #fdb515;
+  --color-accent-600: #e09a00;
+
+  /* Текст и поверхности */
+  --color-ink-900: #16213e;
+  --color-ink-700: #2b3556;
+  --color-ink-500: #5b6484;
+  --color-ink-300: #9aa1b9;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f7fb;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,29 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  options: readonly string[];
+  placeholder: string;
+  required?: boolean;
+}
+
+const { id, name, label, options, placeholder, required = true }: Props = Astro.props;
+---
+
+<div class="flex flex-col gap-1.5">
+  <label for={id} class="text-ink-900 text-sm font-semibold">
+    {label}{required && <span class="text-brand-600"> *</span>}
+  </label>
+  <select
+    id={id}
+    name={name}
+    required={required}
+    aria-describedby={`${id}-error`}
+    class="border-ink-300/70 bg-surface text-ink-900 focus-visible:border-brand-500 focus-visible:ring-brand-500/30 aria-[invalid=true]:border-brand-600 aria-[invalid=true]:ring-brand-600/20 rounded-xl border px-4 py-3 text-base transition-colors outline-none focus-visible:ring-2 aria-[invalid=true]:ring-2"
+  >
+    <option value="" disabled selected>{placeholder}</option>
+    {options.map((option) => <option value={option}>{option}</option>)}
+  </select>
+  <p id={`${id}-error`} class="text-brand-700 hidden text-sm font-medium" role="alert"></p>
+</div>

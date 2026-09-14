@@ -1,0 +1,31 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { site, getLocale } from '@/content/site';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<Section id="faq" muted>
+  <SectionHeading eyebrow="FAQ" title={t.faq.title} align="center" />
+
+  <div
+    class="divide-ink-900/10 border-ink-900/10 bg-surface mx-auto mt-10 max-w-3xl divide-y rounded-2xl border"
+  >
+    {
+      t.faq.items.map((qa) => (
+        <details class="group px-5">
+          <summary class="font-display text-ink-900 focus-visible:outline-brand-600 flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-lg font-bold focus-visible:outline-2 focus-visible:outline-offset-2 [&::-webkit-details-marker]:hidden">
+            <span>{qa.q}</span>
+            <Icon
+              name="lucide:chevron-down"
+              class="text-brand-500 h-5 w-5 shrink-0 transition-transform group-open:rotate-180"
+            />
+          </summary>
+          <p class="text-ink-700 pb-5">{qa.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</Section>

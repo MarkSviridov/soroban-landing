@@ -1,0 +1,35 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { site, getLocale } from '@/content/site';
+import { LESSON_VIDEO } from '@/consts';
+
+const t = site[getLocale(Astro.url)];
+// Секция подключается только там, где ролик есть (см. страницы). Фолбэк на ru
+// оставляет тип не-null и не меняет вывод русской версии.
+const video = LESSON_VIDEO[getLocale(Astro.url)] ?? LESSON_VIDEO.ru;
+---
+
+<Section id="video">
+  <SectionHeading eyebrow={t.vsl.eyebrow} title={t.vsl.title} align="center" />
+
+  <div class="mx-auto mt-8 max-w-sm">
+    {/* Видео вертикальное (9:16) — контейнер держит пропорции и скругления блока. */}
+    <video
+      class="aspect-[9/16] w-full rounded-3xl bg-black shadow-sm"
+      controls
+      preload="metadata"
+      playsinline
+      poster={video.poster}
+      aria-label={t.vsl.videoAriaLabel}
+    >
+      <source src={video.src} type="video/mp4" />
+      {t.vsl.videoFallback}
+      <a href={video.src} class="text-brand-600 font-semibold underline">
+        {t.vsl.videoDownload}
+      </a>.
+    </video>
+  </div>
+
+  <p class="text-ink-600 mx-auto mt-4 max-w-md text-center">{t.vsl.text}</p>
+</Section>

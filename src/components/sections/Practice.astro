@@ -1,0 +1,27 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { site, getLocale } from '@/content/site';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<Section id="practice" muted>
+  <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+    <Photo
+      src="/images/optimized/photos/practice-teacher-helps-boy.webp"
+      alt={t.practice.imageAlt}
+      width={1194}
+      height={568}
+      class="border-ink-900/10 h-auto w-full rounded-3xl border shadow-sm lg:order-1"
+    />
+
+    <div class="lg:order-2">
+      <SectionHeading eyebrow={t.practice.eyebrow} title={t.practice.title} />
+      <div class="text-ink-700 mt-4 grid gap-4 text-lg">
+        {t.practice.text.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,49 @@
+---
+interface Props {
+  href?: string;
+  type?: 'button' | 'submit';
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'md' | 'lg';
+  class?: string;
+  id?: string;
+  'data-analytics'?: string;
+}
+
+const {
+  href,
+  type = 'button',
+  variant = 'primary',
+  size = 'lg',
+  class: className = '',
+  id,
+  'data-analytics': dataAnalytics,
+}: Props = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-full font-display font-extrabold no-underline transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:opacity-60';
+
+const sizes = {
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-7 py-3.5 text-base',
+};
+
+const variants = {
+  primary: 'bg-brand-500 text-white hover:bg-brand-600',
+  secondary: 'bg-accent-500 text-ink-900 hover:bg-accent-600',
+  ghost: 'bg-transparent text-brand-600 hover:bg-brand-50',
+};
+
+const cls = [base, sizes[size], variants[variant], className];
+---
+
+{
+  href ? (
+    <a href={href} class:list={cls} id={id} data-analytics={dataAnalytics}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class:list={cls} id={id} data-analytics={dataAnalytics}>
+      <slot />
+    </button>
+  )
+}

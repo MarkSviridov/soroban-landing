@@ -1,0 +1,31 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { site, getLocale } from '@/content/site';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<Section id="how">
+  <SectionHeading eyebrow={t.how.eyebrow} title={t.how.title} />
+
+  <Photo
+    src="/images/optimized/photos/class-two-kids-at-desk.webp"
+    alt={t.how.imageAlt}
+    width={1190}
+    height={568}
+    class="border-ink-900/10 mt-8 h-auto w-full rounded-3xl border shadow-sm"
+  />
+
+  <dl class="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      t.how.items.map((item) => (
+        <div class="border-ink-900/5 bg-surface rounded-2xl border p-6 shadow-sm">
+          <dt class="text-brand-600 text-sm font-bold tracking-wide uppercase">{item.label}</dt>
+          <dd class="text-ink-900 mt-1 text-lg font-semibold">{item.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</Section>

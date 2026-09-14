@@ -1,0 +1,39 @@
+---
+/**
+ * Переключатель языка RU ⇄ RO. Ведёт на ту же страницу в другой локали.
+ * Без автоматического редиректа по языку браузера — только явный клик.
+ */
+import { getLocale, localeUrls, site } from '@/content/site';
+
+const current = getLocale(Astro.url);
+const urls = localeUrls(Astro.url.pathname);
+const t = site[current];
+
+const ru = { code: 'ru' as const, label: 'RU', href: urls.ru };
+const ro = { code: 'ro' as const, label: 'RO', href: urls.ro };
+// Язык текущей локали идёт первым: на /ro/ — «RO / RU» (Română / Rusă), на / — «RU / RO».
+const items = current === 'ro' ? [ro, ru] : [ru, ro];
+---
+
+<nav aria-label={t.a11y.langSwitch} class="flex items-center gap-1 text-sm font-bold">
+  {
+    items.map((item, i) => (
+      <>
+        {i > 0 && (
+          <span class="text-ink-300" aria-hidden="true">
+            /
+          </span>
+        )}
+        {item.code === current ? (
+          <span class="text-ink-900" aria-current="true">
+            {item.label}
+          </span>
+        ) : (
+          <a href={item.href} hreflang={item.code} class="text-ink-500 hover:text-brand-600">
+            {item.label}
+          </a>
+        )}
+      </>
+    ))
+  }
+</nav>

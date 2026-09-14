@@ -1,0 +1,73 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import Button from '@/components/ui/Button.astro';
+import { site, getLocale } from '@/content/site';
+import { PHONE, HERO_VIDEO } from '@/consts';
+
+const locale = getLocale(Astro.url);
+const t = site[locale];
+const video = HERO_VIDEO[locale];
+---
+
+<Section id="hero" class="pt-10 sm:pt-14">
+  <div class="grid items-center gap-10 lg:grid-cols-2">
+    <div>
+      <p class="font-display text-brand-600 text-sm font-bold tracking-wide uppercase">
+        {t.hero.eyebrow}
+      </p>
+      <h1 class="font-display text-ink-900 mt-3 text-4xl leading-tight font-black sm:text-5xl">
+        {t.hero.title}
+      </h1>
+      <p class="text-ink-700 mt-5 text-lg">{t.hero.subtitle}</p>
+
+      <ul class="mt-6 grid gap-2 sm:grid-cols-2">
+        {
+          t.hero.points.map((point) => (
+            <li class="text-ink-700 flex items-start gap-2 text-sm font-semibold">
+              <Icon name="lucide:check" class="text-brand-500 mt-0.5 h-4 w-4 shrink-0" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href="#lead-form" data-analytics="hero_cta">{t.cta.primary}</Button>
+        <Button href={PHONE.href} variant="ghost">{t.cta.call}: {PHONE.display}</Button>
+      </div>
+    </div>
+
+    <div class="lg:pl-6">
+      {
+        /*
+        Тот же медиаблок, где было фото. Видео вертикальное 9:16 — не фон,
+        не растягиваем и не обрезаем: aspect-[9/16] + object-contain на чёрном фоне.
+        Ширина: 100% на мобильном, ограничена на десктопе.
+      */
+      }
+      <figure class="mx-auto w-full sm:max-w-sm lg:max-w-[280px]">
+        <video
+          class="border-ink-900/10 aspect-[9/16] w-full rounded-3xl border bg-black object-contain shadow-sm"
+          autoplay
+          muted
+          loop
+          playsinline
+          controls
+          preload="metadata"
+          poster={video.poster}
+          aria-label={t.hero.videoAriaLabel}
+        >
+          <source src={video.src} type="video/mp4" />
+          <p class="text-ink-700 p-4 text-sm">
+            {t.hero.videoFallback}
+            <a href={video.src} class="text-brand-600 font-semibold underline">
+              {t.hero.videoDownload}
+            </a>.
+          </p>
+        </video>
+        <figcaption class="sr-only">{t.hero.videoCaption}</figcaption>
+      </figure>
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,92 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Button from '@/components/ui/Button.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { site, getLocale } from '@/content/site';
+import { APP_LINKS } from '@/consts';
+
+const t = site[getLocale(Astro.url)];
+
+const screenshots = [
+  {
+    src: '/images/optimized/app/screen-start.webp',
+    alt: t.app.screenshotAlts[0],
+    width: 1600,
+    height: 738,
+  },
+  {
+    src: '/images/optimized/app/screen-gameplay.webp',
+    alt: t.app.screenshotAlts[1],
+    width: 1600,
+    height: 738,
+  },
+  {
+    src: '/images/optimized/app/screen-abacus-trainer.webp',
+    alt: t.app.screenshotAlts[2],
+    width: 1011,
+    height: 592,
+  },
+];
+---
+
+<Section id="app" muted>
+  <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+    <div>
+      <SectionHeading eyebrow={t.app.eyebrow} title={t.app.title} intro={t.app.text} />
+
+      <ul class="mt-6 space-y-3">
+        {
+          t.app.points.map((point) => (
+            <li class="text-ink-700 flex items-start gap-2">
+              <Icon name="lucide:check" class="text-brand-500 mt-1 h-4 w-4 shrink-0" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={APP_LINKS.appStore} size="md">App Store</Button>
+        <Button
+          href={APP_LINKS.googlePlay}
+          size="md"
+          variant="ghost"
+          class="border-brand-200 border"
+        >
+          Google Play
+        </Button>
+      </div>
+    </div>
+
+    <Photo
+      src="/images/optimized/photos/online-lesson-girl-laptop.webp"
+      alt={t.app.onlinePhotoAlt}
+      width={576}
+      height={570}
+      class="border-ink-900/10 h-auto w-full rounded-3xl border shadow-sm"
+    />
+  </div>
+
+  <div class="mt-12">
+    <p class="text-ink-500 text-sm">{t.app.screenshotsNote}</p>
+    <ul class="mt-3 flex snap-x gap-4 overflow-x-auto pb-2">
+      {
+        screenshots.map((shot) => (
+          <li class="shrink-0 snap-start">
+            <img
+              src={shot.src}
+              alt={shot.alt}
+              width={shot.width}
+              height={shot.height}
+              loading="lazy"
+              decoding="async"
+              class="border-ink-900/10 h-52 w-auto rounded-xl border bg-white sm:h-60"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>

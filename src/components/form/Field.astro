@@ -1,0 +1,54 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: 'text' | 'tel' | 'number' | 'email';
+  placeholder?: string;
+  required?: boolean;
+  inputmode?: 'text' | 'tel' | 'numeric' | 'email';
+  min?: number | string;
+  max?: number | string;
+  autocomplete?: string;
+  /** Скрывает значение поля в записи сессии Яндекс.Вебвизора (не влияет на вид поля). */
+  maskWebvisor?: boolean;
+}
+
+const {
+  id,
+  name,
+  label,
+  type = 'text',
+  placeholder,
+  required = true,
+  inputmode,
+  min,
+  max,
+  autocomplete,
+  maskWebvisor = false,
+}: Props = Astro.props;
+---
+
+<div class="flex flex-col gap-1.5">
+  <label for={id} class="text-ink-900 text-sm font-semibold">
+    {label}{required && <span class="text-brand-600"> *</span>}
+  </label>
+  <input
+    id={id}
+    name={name}
+    type={type}
+    placeholder={placeholder}
+    required={required}
+    inputmode={inputmode}
+    min={min}
+    max={max}
+    autocomplete={autocomplete}
+    aria-describedby={`${id}-error`}
+    data-ym-disable-keys={maskWebvisor ? 'true' : undefined}
+    class:list={[
+      'border-ink-300/70 bg-surface text-ink-900 placeholder:text-ink-300 focus-visible:border-brand-500 focus-visible:ring-brand-500/30 aria-[invalid=true]:border-brand-600 aria-[invalid=true]:ring-brand-600/20 rounded-xl border px-4 py-3 text-base transition-colors outline-none focus-visible:ring-2 aria-[invalid=true]:ring-2',
+      { 'ym-hide-content': maskWebvisor },
+    ]}
+  />
+  <p id={`${id}-error`} class="text-brand-700 hidden text-sm font-medium" role="alert"></p>
+</div>

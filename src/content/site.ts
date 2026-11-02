@@ -51,6 +51,8 @@ export interface LocaleContent {
     videoFallback: string;
     videoDownload: string;
     videoCaption: string;
+    /** Пометка о языке ролика — там, где язык страницы не румынский. */
+    videoLanguageNote?: string;
   };
 
   about: { eyebrow: string; title: string; text: string[]; imageAlt: string };
@@ -79,15 +81,7 @@ export interface LocaleContent {
     videoFallback: string;
     videoDownload: string;
   };
-  welcome: {
-    eyebrow: string;
-    title: string;
-    intro: string;
-    points: string[];
-    videoLabel: string;
-    /** Пометка о языке ролика — нужна там, где язык страницы не румынский. */
-    languageNote?: string;
-  };
+
   practice: { eyebrow: string; title: string; text: string[]; imageAlt: string };
   trial: { title: string; items: string[]; note: string };
   faq: { title: string; items: QA[] };
@@ -234,11 +228,12 @@ const ru: LocaleContent = {
       'Офлайн в 4 районах Кишинёва или онлайн',
       'SOROBAN работает в Молдове с 2017 года',
     ],
-    videoAriaLabel: 'Видео о методике SOROBAN и занятиях для детей',
+    videoAriaLabel: 'Преподаватель SOROBAN рассказывает о курсе',
     videoFallback: 'Ваш браузер не поддерживает встроенное видео.',
     videoDownload: 'Скачать видео о методике SOROBAN (MP4)',
     videoCaption:
-      'Видео о методике SOROBAN: педагог рассказывает о занятиях ментальной арифметикой для детей 5–12 лет в Кишинёве.',
+      'Видео: преподаватель SOROBAN у доски рассказывает, как устроен курс ментальной арифметики для детей 5–12 лет.',
+    videoLanguageNote: 'Видео на румынском языке.',
   },
 
   about: {
@@ -305,19 +300,6 @@ const ru: LocaleContent = {
     videoAriaLabel: 'Видео с занятия SOROBAN: ребёнок считает в уме',
     videoFallback: 'Ваш браузер не поддерживает встроенное видео.',
     videoDownload: 'Скачать видео (MP4)',
-  },
-  welcome: {
-    eyebrow: 'Знакомство',
-    title: 'Как устроен курс',
-    intro:
-      'Преподаватель меньше чем за минуту рассказывает, как построена программа и как ребёнок продолжает практику дома, в приложении SoroboomAR.',
-    points: [
-      'Программа разбита на модули',
-      'Занятия раз в неделю в группе с тренером',
-      'Ежедневная практика в приложении',
-    ],
-    videoLabel: 'Преподаватель SOROBAN рассказывает о курсе',
-    languageNote: 'Видео на румынском языке.',
   },
 
   practice: {
@@ -524,11 +506,11 @@ const ro: LocaleContent = {
       'Offline în 4 sectoare din Chișinău sau online',
       'SOROBAN activează în Moldova din 2017',
     ],
-    videoAriaLabel: 'Videoclip despre metoda SOROBAN și lecțiile pentru copii',
+    videoAriaLabel: 'Prezentarea cursului SOROBAN de către profesor',
     videoFallback: 'Browserul dumneavoastră nu acceptă redarea video.',
     videoDownload: 'Descărcați videoclipul despre metoda SOROBAN (MP4)',
     videoCaption:
-      'Videoclip despre metoda SOROBAN: profesoara povestește despre lecțiile de aritmetică mentală pentru copii de 5–12 ani din Chișinău.',
+      'Videoclip: profesorul SOROBAN explică la tablă cum este construit cursul de aritmetică mentală pentru copii de 5–12 ani.',
   },
 
   about: {
@@ -595,18 +577,6 @@ const ro: LocaleContent = {
     videoAriaLabel: 'Videoclip de la o lecție SOROBAN: un băiat calculează în minte',
     videoFallback: 'Browserul dumneavoastră nu acceptă redarea video.',
     videoDownload: 'Descărcați videoclipul (MP4)',
-  },
-  welcome: {
-    eyebrow: 'Prezentare',
-    title: 'Cum este construit cursul',
-    intro:
-      'Profesorul nostru explică, în mai puțin de un minut, cum este organizat programul și cum continuă copilul exersarea acasă, în aplicația SoroboomAR.',
-    points: [
-      'Programul este împărțit în module',
-      'Lecții o dată pe săptămână, în grupă, cu profesorul',
-      'Exersare zilnică în aplicație',
-    ],
-    videoLabel: 'Prezentarea cursului SOROBAN de către profesor',
   },
 
   practice: {

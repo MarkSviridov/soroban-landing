@@ -34,9 +34,15 @@ export interface VideoAsset {
   poster: string;
 }
 
+/**
+ * Видео первого экрана (VSL): преподаватель у доски рассказывает о курсе.
+ * Ролик румынский — речь и вшитые подписи; один файл на обе версии сайта, на
+ * русской под ним пометка о языке. Прежние ролики с преподавательницей
+ * (vsl-soroban*.mp4) больше нигде не используются.
+ */
 export const HERO_VIDEO: Record<'ru' | 'ro', VideoAsset> = {
-  ru: { src: '/videos/vsl-soroban.mp4', poster: '/videos/vsl-soroban-poster.jpg' },
-  ro: { src: '/videos/ro/vsl-soroban-ro.mp4', poster: '/videos/ro/vsl-soroban-ro-poster.jpg' },
+  ru: { src: '/videos/welcome-ro.mp4', poster: '/videos/welcome-ro-poster.jpg' },
+  ro: { src: '/videos/welcome-ro.mp4', poster: '/videos/welcome-ro-poster.jpg' },
 };
 
 export const LESSON_VIDEO: { ru: VideoAsset; ro: VideoAsset | null } = {
@@ -48,15 +54,6 @@ export const LESSON_VIDEO: { ru: VideoAsset; ro: VideoAsset | null } = {
     src: '/videos/ro/vsl-soroban-lesson-ro.mp4',
     poster: '/videos/ro/vsl-soroban-lesson-ro-poster.jpg',
   },
-};
-
-/**
- * Приветственное видео преподавателя у доски: речь и вшитые подписи румынские.
- * Один файл на обе версии основного сайта и на онлайн-лендинг. Вертикальное 9:16.
- */
-export const WELCOME_VIDEO: VideoAsset = {
-  src: '/videos/welcome-ro.mp4',
-  poster: '/videos/welcome-ro-poster.jpg',
 };
 
 export const LESSON = {

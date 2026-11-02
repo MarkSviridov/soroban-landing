@@ -67,6 +67,11 @@ const video = HERO_VIDEO[locale];
           </p>
         </video>
         <figcaption class="sr-only">{t.hero.videoCaption}</figcaption>
+        {
+          t.hero.videoLanguageNote && (
+            <p class="text-ink-500 mt-2 text-center text-xs">{t.hero.videoLanguageNote}</p>
+          )
+        }
       </figure>
     </div>
   </div>

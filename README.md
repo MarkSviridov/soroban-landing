@@ -23,6 +23,23 @@ npm run format    # форматирование Prettier
 npm run lint      # ESLint + проверка форматирования
 ```
 
+## Публикация
+
+Сайт — статика на VPS (bit.hosting, Ubuntu, nginx), перед ним Cloudflare в режиме
+SSL «Flexible». **GitHub с сервером не связан**: пуш в репозиторий сайт не обновляет.
+
+```bash
+./scripts/deploy.sh            # сборка → резервная копия → новая версия рядом → подмена
+./scripts/deploy.sh rollback   # вернуть предыдущую версию
+```
+
+- Сервер `root@109.122.27.34`, папка сайта `/var/www/soroban-landing`, конфиг nginx
+  `/etc/nginx/sites-enabled/soroban-landing`.
+- Вход только по SSH-ключу (`~/.ssh/id_ed25519` на MacBook Air). С другого компьютера
+  сначала добавьте его ключ: `ssh-copy-id root@109.122.27.34`.
+- Резервные копии каждой выкладки — `/root/backups/soroban-landing-<дата>.tar.gz`.
+- Старые файлы при выкладке не удаляются.
+
 ## Где править контент
 
 | Что                                            | Файл                           |

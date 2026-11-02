@@ -36,3 +36,39 @@ ffmpeg -ss 6 -i media-src/videos/IMG_9394.MP4 -frames:v 1 -q:v 3 public/videos/v
 
 Заменить `<video>` в нужном компоненте на
 `<iframe class="aspect-[9/16] w-full rounded-3xl" src="…" loading="lazy" allowfullscreen>`.
+
+## Онлайн-лендинг (`public/videos/online/`)
+
+| Файл                       | Где используется                                                      | Параметры                                                           |
+| -------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `online-lesson.mp4`        | первый экран `/online/` — автозапуск без звука, петля; звук по кнопке | H.264 High, 720×1280, 30 к/с, ~1,2 Мбит/с, AAC 96k, 31,7 с, ~4,9 МБ |
+| `online-lesson-poster.jpg` | постер                                                                | кадр 18 с, ~160 КБ                                                  |
+| `welcome-ro.mp4`           | блок «Prezentare» — только `/online/`, с кнопками, без автозапуска    | H.264 High, 720×1280, 30 к/с, ~1,4 Мбит/с, AAC 96k, 42,7 с, ~7,5 МБ |
+| `welcome-ro-poster.jpg`    | постер                                                                | кадр 22 с, ~85 КБ                                                   |
+
+Исходники — `media-src/videos/online/` (**исключены из git**: файл приветственного
+видео 260 МБ, GitHub не принимает файлы больше 100 МБ). Хранятся только локально.
+
+`online-lesson-IMG_6961.MOV` — 1080×1920 HEVC 30 к/с; `welcome-ro-IMG_5935.MP4` — 2160×3840 H.264 50 к/с.
+
+### Пересборка без ffmpeg
+
+На этом Mac нет ffmpeg, поэтому перекодировщик написан на AVFoundation —
+`scripts/video/`. Он даёт то же, что рецепт выше: H.264 High, AAC 96k,
+moov в начале файла, без метаданных исходника (в видео с iPhone записана геолокация).
+
+```bash
+swiftc -O -o /tmp/transcode scripts/video/transcode.swift
+swiftc -O -o /tmp/poster scripts/video/poster.swift
+
+/tmp/transcode media-src/videos/online/online-lesson-IMG_6961.MOV public/videos/online/online-lesson.mp4 720 1280 30 1200000 1
+/tmp/poster public/videos/online/online-lesson.mp4 18 public/videos/online/online-lesson-poster.jpg
+
+/tmp/transcode media-src/videos/online/welcome-ro-IMG_5935.MP4 public/videos/welcome-ro.mp4 720 1280 30 1400000 1
+/tmp/poster public/videos/welcome-ro.mp4 22 public/videos/welcome-ro-poster.jpg
+```
+
+Аргументы `transcode`: вход, выход, ширина, высота, к/с, битрейт видео, звук (`1`/`0`).
+
+После перекодирования удалите временные файлы `*.sb-*` в `public/videos/online/`,
+если они появились, — иначе уедут в сборку.

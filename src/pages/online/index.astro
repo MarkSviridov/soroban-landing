@@ -1,0 +1,35 @@
+---
+import OnlineLayout from '@/layouts/OnlineLayout.astro';
+import OnlineHeader from '@/components/online/OnlineHeader.astro';
+import OnlineHero from '@/components/online/OnlineHero.astro';
+import LiveDifference from '@/components/online/LiveDifference.astro';
+import WelcomeVideo from '@/components/online/WelcomeVideo.astro';
+import HowOnline from '@/components/online/HowOnline.astro';
+import OnlineApp from '@/components/online/OnlineApp.astro';
+import Pricing from '@/components/online/Pricing.astro';
+import Teachers from '@/components/online/Teachers.astro';
+import OnlineTestimonials from '@/components/online/OnlineTestimonials.astro';
+import OnlineFAQ from '@/components/online/OnlineFAQ.astro';
+import OnlineForm from '@/components/online/OnlineForm.astro';
+import OnlineFooter from '@/components/online/OnlineFooter.astro';
+import { online, getOnlineLocale } from '@/content/online';
+
+const t = online[getOnlineLocale(Astro.url)];
+---
+
+<OnlineLayout title={t.meta.title} description={t.meta.description}>
+  <OnlineHeader />
+  <main>
+    <OnlineHero />
+    <LiveDifference />
+    <WelcomeVideo />
+    <HowOnline />
+    <OnlineApp />
+    <Pricing />
+    <Teachers />
+    <OnlineTestimonials />
+    <OnlineFAQ />
+    <OnlineForm />
+  </main>
+  <OnlineFooter />
+</OnlineLayout>

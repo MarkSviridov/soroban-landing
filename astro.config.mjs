@@ -19,6 +19,22 @@ export default defineConfig({
       i18n: { defaultLocale: 'ru', locales: { ru: 'ru', ro: 'ro' } },
       // Политика конфиденциальности помечена noindex — в карту сайта не включаем.
       filter: (page) => !/\/privacy\/?$/.test(page),
+      // Онлайн-лендинг живёт по своей схеме путей и в автоматическую i18n-схему
+      // не попадает. Альтернативы ставим вручную — только если опубликовано
+      // больше одной версии. Держать в синхроне с PUBLISHED_ONLINE_LOCALES
+      // в src/content/online.ts.
+      serialize(item) {
+        const online = { ro: '/online/' };
+        const paths = Object.values(online);
+        const { pathname } = new URL(item.url);
+        if (paths.length > 1 && paths.includes(pathname)) {
+          item.links = [
+            ...Object.entries(online).map(([lang, path]) => ({ lang, url: `${SITE_URL}${path}` })),
+            { lang: 'x-default', url: `${SITE_URL}${online.ro}` },
+          ];
+        }
+        return item;
+      },
     }),
   ],
   vite: {

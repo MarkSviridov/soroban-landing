@@ -1,0 +1,51 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import { online, getOnlineLocale } from '@/content/online';
+
+const t = online[getOnlineLocale(Astro.url)];
+---
+
+<Section id="live" muted>
+  <SectionHeading
+    eyebrow={t.live.eyebrow}
+    title={t.live.title}
+    intro={t.live.intro}
+    align="center"
+  />
+
+  <div class="mx-auto mt-10 grid max-w-4xl gap-5 md:grid-cols-2">
+    <div class="border-ink-900/10 bg-surface rounded-2xl border p-6">
+      <h3 class="font-display text-ink-500 text-sm font-bold tracking-wide uppercase">
+        {t.live.not.title}
+      </h3>
+      <ul class="mt-4 space-y-3">
+        {
+          t.live.not.items.map((i) => (
+            <li class="text-ink-500 flex items-start gap-3 text-sm">
+              <Icon name="lucide:x" class="text-ink-300 mt-0.5 h-4 w-4 shrink-0" />
+              <span>{i}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="border-brand-200 bg-brand-50 rounded-2xl border p-6">
+      <h3 class="font-display text-brand-700 text-sm font-bold tracking-wide uppercase">
+        {t.live.yes.title}
+      </h3>
+      <ul class="mt-4 space-y-3">
+        {
+          t.live.yes.items.map((i) => (
+            <li class="text-ink-900 flex items-start gap-3 text-sm font-medium">
+              <Icon name="lucide:check" class="text-brand-500 mt-0.5 h-4 w-4 shrink-0" />
+              <span>{i}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</Section>

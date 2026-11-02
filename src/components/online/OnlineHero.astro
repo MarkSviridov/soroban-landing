@@ -1,0 +1,140 @@
+---
+import { Icon } from 'astro-icon/components';
+import Container from '@/components/ui/Container.astro';
+import Button from '@/components/ui/Button.astro';
+import { online, getOnlineLocale, WHATSAPP, LESSON_VIDEO } from '@/content/online';
+
+const t = online[getOnlineLocale(Astro.url)];
+---
+
+<section class="bg-surface relative overflow-hidden">
+  <div class="from-brand-50 pointer-events-none absolute inset-0 bg-gradient-to-b to-transparent">
+  </div>
+  <Container class="relative py-14 sm:py-20 lg:py-24">
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+      <div>
+        <p class="font-display text-brand-600 text-xs font-bold tracking-wide uppercase sm:text-sm">
+          {t.hero.eyebrow}
+        </p>
+        <h1
+          class="font-display text-ink-900 mt-3 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl"
+        >
+          {t.hero.title}
+        </h1>
+        <p class="text-ink-700 mt-5 text-base sm:text-lg">{t.hero.subtitle}</p>
+
+        <ul class="mt-6 grid gap-2.5 sm:grid-cols-2">
+          {
+            t.hero.points.map((p) => (
+              <li class="text-ink-700 flex items-start gap-2 text-sm">
+                <Icon name="lucide:check" class="text-brand-500 mt-0.5 h-4 w-4 shrink-0" />
+                <span>{p}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Button href="#lead" data-analytics="online_hero_cta">{t.hero.ctaPrimary}</Button>
+          <a
+            href={WHATSAPP.link}
+            target="_blank"
+            rel="noopener"
+            data-analytics="online_hero_whatsapp"
+            class="text-ink-700 hover:text-brand-600 inline-flex items-center justify-center gap-2 text-sm font-bold no-underline"
+          >
+            <Icon name="lucide:message-circle" class="h-5 w-5" />
+            {t.hero.ctaWhatsapp}
+          </a>
+        </div>
+
+        <p class="text-ink-500 mt-6 text-xs">{t.hero.trustLine}</p>
+      </div>
+
+      <figure class="mx-auto w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[360px]">
+        <div
+          class="bg-ink-900 ring-ink-900/5 relative overflow-hidden rounded-3xl shadow-xl ring-1"
+        >
+          <video
+            id="online-hero-video"
+            class="aspect-[9/16] h-auto w-full object-cover"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster={LESSON_VIDEO.poster}
+            width={LESSON_VIDEO.width}
+            height={LESSON_VIDEO.height}
+            aria-label={t.hero.videoLabel}
+          >
+            <source src={LESSON_VIDEO.src} type="video/mp4" />
+            {t.hero.videoFallback}
+          </video>
+          <button
+            id="online-hero-sound"
+            type="button"
+            aria-pressed="false"
+            data-analytics="online_hero_sound"
+            class="absolute right-3 bottom-3 rounded-full bg-black/65 px-3.5 py-2 text-sm font-bold text-white backdrop-blur-sm transition-colors hover:bg-black/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <span data-sound-off class="inline-flex items-center gap-2">
+              <Icon name="lucide:volume-x" class="h-4 w-4" />
+              {t.hero.soundOn}
+            </span>
+            <span data-sound-on hidden class="inline-flex items-center gap-2">
+              <Icon name="lucide:volume-2" class="h-4 w-4" />
+              {t.hero.soundOff}
+            </span>
+          </button>
+        </div>
+        <figcaption class="sr-only">{t.hero.videoLabel}</figcaption>
+      </figure>
+    </div>
+  </Container>
+</section>
+
+<script is:inline>
+  (function () {
+    const video = document.getElementById('online-hero-video');
+    const button = document.getElementById('online-hero-sound');
+    if (!video || !button) return;
+
+    // «Уменьшить движение» в системе — не запускаем ролик сами, даём штатные
+    // кнопки плеера; своя кнопка звука тогда не нужна.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      video.controls = true;
+      button.hidden = true;
+      return;
+    }
+
+    // Браузеры запускают видео только без звука. Звук — по нажатию: ролик
+    // начинается заново и не зацикливается, чтобы речь не повторялась по кругу.
+    const off = button.querySelector('[data-sound-off]');
+    const on = button.querySelector('[data-sound-on]');
+    button.addEventListener('click', function () {
+      const turnOn = video.muted;
+      video.muted = !turnOn;
+      video.loop = !turnOn;
+      if (turnOn) {
+        video.currentTime = 0;
+        video.play();
+      }
+      button.setAttribute('aria-pressed', String(turnOn));
+      off.hidden = turnOn;
+      on.hidden = !turnOn;
+    });
+
+    // Досмотрели со звуком — возвращаем тихую петлю.
+    video.addEventListener('ended', function () {
+      video.muted = true;
+      video.loop = true;
+      button.setAttribute('aria-pressed', 'false');
+      off.hidden = false;
+      on.hidden = true;
+      video.play();
+    });
+  })();
+</script>

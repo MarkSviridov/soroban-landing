@@ -1,0 +1,46 @@
+---
+/**
+ * Отзывы для онлайн-лендинга. Скриншоты из Google Карт существуют только
+ * на русском и румынском, поэтому на английской версии секция не выводится —
+ * заменим её отзывами зарубежных учеников, когда они появятся.
+ */
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { online, getOnlineLocale } from '@/content/online';
+import { reviews, buildReviewAlt } from '@/content/reviews';
+import { site } from '@/content/site';
+
+const locale = getOnlineLocale(Astro.url);
+const t = online[locale];
+
+const reviewLocale = locale === 'en' ? null : locale;
+const items = reviewLocale ? reviews[reviewLocale].slice(0, 6) : [];
+const altTemplate = reviewLocale ? site[reviewLocale].testimonials.altTemplate : '';
+---
+
+{
+  items.length > 0 && (
+    <Section id="testimonials">
+      <SectionHeading
+        eyebrow={t.testimonials.eyebrow}
+        title={t.testimonials.title}
+        intro={t.testimonials.intro}
+        align="center"
+      />
+      <div class="mt-10 columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5">
+        {items.map((r) => (
+          <figure class="border-ink-900/10 break-inside-avoid overflow-hidden rounded-xl border">
+            <Photo
+              src={r.src}
+              alt={buildReviewAlt(altTemplate, r.names)}
+              width={r.width}
+              height={r.height}
+              class="h-auto w-full"
+            />
+          </figure>
+        ))}
+      </div>
+    </Section>
+  )
+}

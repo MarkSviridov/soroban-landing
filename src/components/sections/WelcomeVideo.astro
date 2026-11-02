@@ -1,0 +1,67 @@
+---
+/**
+ * Приветственное видео преподавателя у доски. Ролик румынский (речь и вшитые
+ * подписи), на русской версии под ним стоит пометка о языке. Тёмный фон —
+ * тот же, что у такого же блока на онлайн-лендинге.
+ */
+import { Icon } from 'astro-icon/components';
+import Container from '@/components/ui/Container.astro';
+import { site, getLocale } from '@/content/site';
+import { WELCOME_VIDEO } from '@/consts';
+
+const t = site[getLocale(Astro.url)];
+---
+
+<section id="welcome" class="bg-ink-900 scroll-mt-24 py-16 sm:py-20 lg:py-24">
+  <Container>
+    <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+      <div>
+        <p class="font-display text-brand-300 text-sm font-bold tracking-wide uppercase">
+          {t.welcome.eyebrow}
+        </p>
+        <h2 class="font-display mt-2 text-3xl font-black text-white sm:text-4xl">
+          {t.welcome.title}
+        </h2>
+        <p class="mt-4 max-w-xl text-lg text-white/80">{t.welcome.intro}</p>
+        <ul class="mt-6 space-y-3">
+          {
+            t.welcome.points.map((p) => (
+              <li class="flex items-start gap-3 text-white/90">
+                <Icon name="lucide:check" class="text-accent-300 mt-1 h-4 w-4 shrink-0" />
+                <span>{p}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <figure class="mx-auto w-full max-w-[320px] sm:max-w-[360px]">
+        <div class="overflow-hidden rounded-3xl bg-black shadow-2xl ring-1 ring-white/10">
+          <video
+            class="aspect-[9/16] h-auto w-full"
+            controls
+            playsinline
+            preload="none"
+            poster={WELCOME_VIDEO.poster}
+            width="720"
+            height="1280"
+            aria-label={t.welcome.videoLabel}
+            data-analytics="welcome_video"
+          >
+            <source src={WELCOME_VIDEO.src} type="video/mp4" />
+            {t.vsl.videoFallback}
+          </video>
+        </div>
+        {
+          t.welcome.languageNote ? (
+            <figcaption class="mt-3 text-center text-sm text-white/60">
+              {t.welcome.languageNote}
+            </figcaption>
+          ) : (
+            <figcaption class="sr-only">{t.welcome.videoLabel}</figcaption>
+          )
+        }
+      </figure>
+    </div>
+  </Container>
+</section>

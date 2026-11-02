@@ -1,0 +1,55 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { online, getOnlineLocale } from '@/content/online';
+import { APP_LINKS } from '@/consts';
+
+const t = online[getOnlineLocale(Astro.url)];
+---
+
+<Section id="app" muted>
+  <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+    <div>
+      <SectionHeading eyebrow={t.app.eyebrow} title={t.app.title} />
+      {t.app.text.map((p) => <p class="text-ink-700 mt-4 max-w-xl">{p}</p>)}
+      <ul class="mt-6 space-y-2.5">
+        {
+          t.app.points.map((p) => (
+            <li class="text-ink-900 flex items-start gap-2 text-sm font-medium">
+              <Icon name="lucide:check" class="text-brand-500 mt-0.5 h-4 w-4 shrink-0" />
+              <span>{p}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href={APP_LINKS.appStore}
+          target="_blank"
+          rel="noopener"
+          class="border-ink-900/15 text-ink-900 hover:border-brand-400 rounded-full border px-4 py-2 text-sm font-bold no-underline"
+          >App Store</a
+        >
+        <a
+          href={APP_LINKS.googlePlay}
+          target="_blank"
+          rel="noopener"
+          class="border-ink-900/15 text-ink-900 hover:border-brand-400 rounded-full border px-4 py-2 text-sm font-bold no-underline"
+          >Google Play</a
+        >
+      </div>
+    </div>
+
+    <div class="ring-ink-900/5 overflow-hidden rounded-3xl shadow-lg ring-1">
+      <Photo
+        src="/images/optimized/app/screen-abacus-trainer.webp"
+        alt={t.app.title}
+        width={1011}
+        height={592}
+        class="h-auto w-full object-cover"
+      />
+    </div>
+  </div>
+</Section>

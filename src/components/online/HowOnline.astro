@@ -1,0 +1,39 @@
+---
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { online, getOnlineLocale } from '@/content/online';
+
+const t = online[getOnlineLocale(Astro.url)];
+---
+
+<Section id="how">
+  <SectionHeading eyebrow={t.how.eyebrow} title={t.how.title} intro={t.how.intro} />
+
+  <div class="mt-10 grid items-start gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+    <dl class="grid gap-4 sm:grid-cols-2">
+      {
+        t.how.steps.map((s) => (
+          <div class="border-ink-900/10 bg-surface-muted rounded-xl border p-4">
+            <dt class="font-display text-brand-600 text-xs font-bold tracking-wide uppercase">
+              {s.label}
+            </dt>
+            <dd class="text-ink-900 mt-1 text-sm font-semibold">{s.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div>
+      <div class="ring-ink-900/5 overflow-hidden rounded-3xl shadow-lg ring-1">
+        <Photo
+          src="/images/optimized/photos/class-group-with-teacher.webp"
+          alt={t.how.title}
+          width={578}
+          height={568}
+          class="h-auto w-full object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</Section>

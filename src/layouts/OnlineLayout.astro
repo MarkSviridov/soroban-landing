@@ -1,0 +1,70 @@
+---
+import '@/styles/global.css';
+import { SITE } from '@/consts';
+import { online, getOnlineLocale, onlineUrls, PUBLISHED_ONLINE_LOCALES } from '@/content/online';
+import CookieConsent from '@/components/online/CookieConsent.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const { title, description, image = '/images/og/og-default.png' } = Astro.props;
+
+const locale = getOnlineLocale(Astro.url);
+const t = online[locale];
+
+const fallbackOrigin = 'https://soroban.digital';
+const base = Astro.site ?? fallbackOrigin;
+const canonical = new URL(onlineUrls[locale], base).href;
+const ogImage = new URL(image, base).href;
+
+const locales = PUBLISHED_ONLINE_LOCALES;
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    {
+      locales.length > 1 &&
+        locales.map((l) => (
+          <link rel="alternate" hreflang={l} href={new URL(onlineUrls[l], base).href} />
+        ))
+    }
+    {
+      locales.length > 1 && (
+        <link rel="alternate" hreflang="x-default" href={new URL(onlineUrls.ro, base).href} />
+      )
+    }
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Nunito:wght@700;800;900&display=swap"
+    />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+    <CookieConsent />
+  </body>
+</html>

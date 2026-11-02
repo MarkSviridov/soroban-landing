@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon/components';
+import Container from '@/components/ui/Container.astro';
+import {
+  online,
+  getOnlineLocale,
+  WHATSAPP,
+  onlineUrls,
+  onlineLocaleNames,
+  PUBLISHED_ONLINE_LOCALES,
+} from '@/content/online';
+import { SITE } from '@/consts';
+
+const locale = getOnlineLocale(Astro.url);
+const t = online[locale];
+const locales = PUBLISHED_ONLINE_LOCALES;
+const year = new Date().getFullYear();
+---
+
+<footer class="border-ink-900/10 bg-surface border-t">
+  <Container class="flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="font-display text-ink-900 text-lg font-black">SOROBAN</p>
+      <p class="text-ink-500 mt-1 text-sm">{t.footer.tagline}</p>
+      <p class="text-ink-300 mt-3 text-xs">© {year} {SITE.brandFull}. {t.footer.rights}</p>
+    </div>
+    <div class="flex flex-col items-start gap-3 sm:items-end">
+      <a
+        href={WHATSAPP.link}
+        target="_blank"
+        rel="noopener"
+        class="text-ink-700 hover:text-brand-600 inline-flex items-center gap-2 text-sm font-bold no-underline"
+      >
+        <Icon name="lucide:message-circle" class="h-4 w-4" />
+        {WHATSAPP.display}
+      </a>
+      {
+        locales.length > 1 && (
+          <ul class="text-ink-500 flex gap-3 text-xs font-bold">
+            {locales.map((l) => (
+              <li>
+                <a href={onlineUrls[l]} hreflang={l} class="hover:text-brand-600 no-underline">
+                  {onlineLocaleNames[l]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </Container>
+</footer>

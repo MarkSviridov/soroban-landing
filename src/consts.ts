@@ -50,11 +50,20 @@ export const LESSON_VIDEO: { ru: VideoAsset; ro: VideoAsset | null } = {
   },
 };
 
+/**
+ * Приветственное видео преподавателя у доски: речь и вшитые подписи румынские.
+ * Один файл на обе версии основного сайта и на онлайн-лендинг. Вертикальное 9:16.
+ */
+export const WELCOME_VIDEO: VideoAsset = {
+  src: '/videos/welcome-ro.mp4',
+  poster: '/videos/welcome-ro-poster.jpg',
+};
+
 export const LESSON = {
-  /** Длительность обычного (регулярного) занятия, минут. */
-  minutes: 45,
+  /** Длительность посещения: два урока — 70 минут (5–7 лет) или 90 (8–12). */
+  minutes70to90: [70, 90] as const,
   /** Максимум детей в группе. */
-  groupMax: 10,
+  groupMax: 12,
 } as const;
 
 export const TRIAL = {
@@ -145,3 +154,6 @@ export const LEADS_WEBHOOK_URL =
   'https://script.google.com/macros/s/AKfycbxK-o3J4pV9uuIaTH5UmxZGbod3fi2OD_-3cqro2-_daas7KFKyWeZId2eJ4voy5plt/exec';
 
 // Варианты для полей формы заявки локализованы: см. `form.options` в src/content/site.ts.
+
+/** ID пикселя Meta. На онлайн-лендинге грузится только после согласия на cookie (ЕС). */
+export const META_PIXEL_ID = '1129340699585489';

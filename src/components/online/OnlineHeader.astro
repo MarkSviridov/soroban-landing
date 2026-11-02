@@ -1,0 +1,58 @@
+---
+import Container from '@/components/ui/Container.astro';
+import Button from '@/components/ui/Button.astro';
+import {
+  online,
+  getOnlineLocale,
+  onlineUrls,
+  onlineLocaleNames,
+  PUBLISHED_ONLINE_LOCALES,
+} from '@/content/online';
+
+const locale = getOnlineLocale(Astro.url);
+const t = online[locale];
+const locales = PUBLISHED_ONLINE_LOCALES;
+---
+
+<header class="border-ink-900/10 bg-surface/95 sticky top-0 z-40 border-b backdrop-blur">
+  <Container class="flex items-center justify-between gap-4 py-3">
+    <a href={onlineUrls[locale]} class="flex items-center gap-2 no-underline">
+      <span class="font-display text-ink-900 text-xl font-black tracking-tight">SOROBAN</span>
+      <span class="font-display text-brand-600 text-sm font-bold">online</span>
+    </a>
+
+    <nav class="text-ink-700 hidden items-center gap-6 text-sm font-semibold lg:flex">
+      <a href="#live" class="hover:text-brand-600 no-underline">{t.nav.live}</a>
+      <a href="#how" class="hover:text-brand-600 no-underline">{t.nav.how}</a>
+      <a href="#pricing" class="hover:text-brand-600 no-underline">{t.nav.pricing}</a>
+      <a href="#faq" class="hover:text-brand-600 no-underline">{t.nav.faq}</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      {
+        locales.length > 1 && (
+          <ul class="text-ink-500 flex items-center gap-1 text-xs font-bold">
+            {locales.map((l) => (
+              <li>
+                <a
+                  href={onlineUrls[l]}
+                  hreflang={l}
+                  aria-current={l === locale ? 'page' : undefined}
+                  class:list={[
+                    'rounded-full px-2 py-1 no-underline',
+                    l === locale ? 'bg-brand-50 text-brand-700' : 'hover:text-brand-600',
+                  ]}
+                >
+                  {onlineLocaleNames[l]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      <span class="hidden sm:block">
+        <Button href="#lead" size="md" data-analytics="online_header_cta">{t.nav.cta}</Button>
+      </span>
+    </div>
+  </Container>
+</header>

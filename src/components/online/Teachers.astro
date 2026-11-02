@@ -1,0 +1,36 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { online, getOnlineLocale } from '@/content/online';
+
+const t = online[getOnlineLocale(Astro.url)];
+---
+
+<Section id="teachers" muted>
+  <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+    <div class="ring-ink-900/5 overflow-hidden rounded-3xl shadow-lg ring-1">
+      <Photo
+        src="/images/optimized/photos/studio-teacher-and-boy.webp"
+        alt={t.teachers.title}
+        width={586}
+        height={584}
+        class="h-auto w-full object-cover"
+      />
+    </div>
+    <div>
+      <SectionHeading
+        eyebrow={t.teachers.eyebrow}
+        title={t.teachers.title}
+        intro={t.teachers.intro}
+      />
+      <p
+        class="border-ink-900/10 bg-surface text-ink-500 mt-6 flex items-start gap-3 rounded-xl border border-dashed p-4 text-sm"
+      >
+        <Icon name="lucide:user-round" class="text-ink-300 mt-0.5 h-5 w-5 shrink-0" />
+        <span>{t.teachers.placeholder}</span>
+      </p>
+    </div>
+  </div>
+</Section>

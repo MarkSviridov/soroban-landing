@@ -1,0 +1,160 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@/components/ui/Section.astro';
+import Button from '@/components/ui/Button.astro';
+import Field from '@/components/form/Field.astro';
+import SelectField from '@/components/form/SelectField.astro';
+import { online, getOnlineLocale, WHATSAPP } from '@/content/online';
+
+const locale = getOnlineLocale(Astro.url);
+const t = online[locale];
+const f = t.form;
+---
+
+<Section id="lead">
+  <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+    <div>
+      <p class="font-display text-brand-600 text-sm font-bold tracking-wide uppercase">
+        {f.eyebrow}
+      </p>
+      <h2 class="font-display text-ink-900 mt-2 text-3xl font-black sm:text-4xl">{f.title}</h2>
+      <p class="text-ink-700 mt-4 text-lg">{f.subtitle}</p>
+
+      <div class="border-ink-900/10 bg-surface-muted mt-8 rounded-2xl border p-5">
+        <p class="text-ink-700 text-sm">{f.whatsappPrompt}</p>
+        <a
+          href={WHATSAPP.link}
+          target="_blank"
+          rel="noopener"
+          data-analytics="online_form_whatsapp"
+          class="bg-ink-900 mt-3 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white no-underline hover:opacity-90"
+        >
+          <Icon name="lucide:message-circle" class="h-4 w-4" />
+          {f.whatsappCta}
+        </a>
+      </div>
+    </div>
+
+    <div class="border-ink-900/10 bg-surface rounded-3xl border p-6 shadow-sm sm:p-8">
+      <form id="online-form" novalidate class="grid gap-4 sm:grid-cols-2">
+        <Field
+          id="o-name"
+          name="parentName"
+          label={f.labels.parentName}
+          placeholder={f.placeholders.parentName}
+          autocomplete="name"
+        />
+        <Field
+          id="o-contact"
+          name="contact"
+          label={f.labels.contact}
+          type="tel"
+          inputmode="tel"
+          placeholder={f.placeholders.contact}
+          autocomplete="tel"
+          maskWebvisor
+        />
+        <Field
+          id="o-age"
+          name="childAge"
+          label={f.labels.childAge}
+          type="number"
+          inputmode="numeric"
+          min={5}
+          max={12}
+          placeholder={f.placeholders.childAge}
+        />
+        <Field
+          id="o-country"
+          name="country"
+          label={f.labels.country}
+          placeholder={f.placeholders.country}
+          required={false}
+        />
+        <SelectField
+          id="o-lang"
+          name="language"
+          label={f.labels.language}
+          options={f.options.languages}
+          placeholder={f.placeholders.select}
+        />
+        <SelectField
+          id="o-format"
+          name="format"
+          label={f.labels.format}
+          options={f.options.formats}
+          placeholder={f.placeholders.select}
+          required={false}
+        />
+
+        <div class="sm:col-span-2">
+          <label for="o-comment" class="text-ink-900 text-sm font-semibold"
+            >{f.labels.comment}</label
+          >
+          <textarea
+            id="o-comment"
+            name="comment"
+            rows="2"
+            placeholder={f.placeholders.comment}
+            class="border-ink-300/70 bg-surface text-ink-900 placeholder:text-ink-300 focus-visible:border-brand-500 focus-visible:ring-brand-500/30 mt-1.5 w-full rounded-xl border px-4 py-3 text-base transition-colors outline-none focus-visible:ring-2"
+          ></textarea>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label class="text-ink-700 flex items-start gap-2.5 text-sm">
+            <input
+              id="o-consent"
+              name="consent"
+              type="checkbox"
+              class="border-ink-300 text-brand-500 focus-visible:ring-brand-500/40 mt-0.5 h-4 w-4 shrink-0 rounded"
+            />
+            <span>{f.labels.consent}</span>
+          </label>
+          <p id="o-consent-error" class="text-brand-700 hidden text-sm font-medium" role="alert">
+          </p>
+        </div>
+
+        <input
+          type="text"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+          class="hidden"
+        />
+
+        <div class="sm:col-span-2">
+          <Button
+            type="submit"
+            id="online-submit"
+            class="w-full"
+            data-analytics="online_form_submit"
+          >
+            <span data-submit-label>{f.submit}</span>
+          </Button>
+          <p id="online-status" class="text-ink-500 mt-3 text-sm" role="status" aria-live="polite">
+          </p>
+        </div>
+      </form>
+
+      <div id="online-success" hidden class="text-center">
+        <Icon name="lucide:check-circle-2" class="text-brand-500 mx-auto h-12 w-12" />
+        <h3 class="font-display text-ink-900 mt-4 text-xl font-black">{f.successTitle}</h3>
+        <p class="text-ink-700 mt-2">{f.successText}</p>
+        <a
+          href={WHATSAPP.link}
+          target="_blank"
+          rel="noopener"
+          class="bg-ink-900 mt-5 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white no-underline hover:opacity-90"
+        >
+          <Icon name="lucide:message-circle" class="h-4 w-4" />
+          {f.whatsappCta}
+        </a>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script>
+  import '@/components/online/online-form.client';
+</script>
